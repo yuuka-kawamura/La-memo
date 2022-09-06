@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.TypedArrayUtils.getString
 import app.kawamura.kawachi.memo.databinding.ActivityMainBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val pref: SharedPreferences = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
 
-    val gson = Gson()
+    private val gson = Gson()
     var data = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
