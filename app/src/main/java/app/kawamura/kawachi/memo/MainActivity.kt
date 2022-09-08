@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,31 +15,28 @@ import com.google.gson.reflect.TypeToken
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val pref: SharedPreferences = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
+    private lateinit var pref: SharedPreferences// = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
 
-    private val gson = Gson()
-    var data = ArrayList<String>()
+
+    private var data = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).apply { setContentView(this.root) }
+        pref = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
+
+        /* data = arrayListOf(
+              "a", "i"
+          )*/
+        // data.isNullOrEmpty().not()= pref.getString("Key","")?.split(",") as ArrayList<String>
 
 
-        data = arrayListOf(
-            "a", "i"
-        )
+        //val addtext = intent.getStringExtra("Text")
 
+        pref.getString("Key", "")?.split(",")?.forEach { data }
+        Log.d("debug", data.toString())
         val list = findViewById<ListView>(R.id.list_view)
         list.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
-        var addtext = intent.getStringExtra("Text")
-        if (addtext !== null)
-            data.add(addtext.toString())
-
-        data = gson.fromJson(
-            pref.getString("Key", ""),
-            object : TypeToken<List<String?>?>() {}.type
-        )
-
 
         binding.plusButton.setOnClickListener {
             val toMemoActivity = Intent(this, MemoActivity::class.java)
@@ -46,10 +44,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        val editor = pref.edit()
-        editor.putString("Key", gson.toJson(data))
-        editor.apply()
-    }
 }
