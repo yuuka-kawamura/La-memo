@@ -12,32 +12,41 @@ import app.kawamura.kawachi.memo.databinding.ActivityMemoBinding
 
 class MemoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMemoBinding
-   //private lateinit var pref: SharedPreferences
+    private lateinit var pref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMemoBinding.inflate(layoutInflater).apply { setContentView(this.root) }
-      val  pref:SharedPreferences = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
-        var data = ArrayList<String>()
+        val pref: SharedPreferences = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
+       //var data = ArrayList<String>()
 
-
+       var data= pref.getString("Key","")
 
         binding.checkButton.setOnClickListener {
+            //打った文字をeditTextに代入
+            var editText = binding.memoEdittext.text.toString()
+            //edittextが空かnullじゃない時
+            if (editText.isNullOrEmpty().not()) {
+                //dataにedittextを追加
+               // data.add(editText)
+                data+=editText
+            }
 
-            var editText=binding.memoEdittext.text.toString()
-            if (editText.isNullOrEmpty().not())
-                data.add(editText.toString())
+            Log.d("debug", data.toString())
 
             val editor = pref.edit()
-            var memoList=""
-            for(word in data){
-                memoList+="$word,"
+            var memoList = ""
+            if (data != null) {
+                for (word in data) {
+
+                        memoList += "$word,"
+                }
             }
-            Log.d("debug",memoList)
-            editor.putString("Key",memoList )
+            Log.d("debug", memoList)
+            editor.putString("Key", memoList)
             editor.apply()
 
-           val toMainActivity = Intent(this, MainActivity::class.java)
+            val toMainActivity = Intent(this, MainActivity::class.java)
 
             startActivity(toMainActivity)
         }
