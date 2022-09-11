@@ -13,14 +13,14 @@ import app.kawamura.kawachi.memo.databinding.ActivityMemoBinding
 class MemoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMemoBinding
     private lateinit var pref: SharedPreferences
-
+    private var data = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMemoBinding.inflate(layoutInflater).apply { setContentView(this.root) }
         val pref: SharedPreferences = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
-       //var data = ArrayList<String>()
 
-       var data= pref.getString("Key","")
+        if (pref.getString("Key", "")!!.isNotEmpty())
+            data = pref.getString("Key", "")?.split(",") as ArrayList<String>
 
         binding.checkButton.setOnClickListener {
             //打った文字をeditTextに代入
@@ -28,18 +28,18 @@ class MemoActivity : AppCompatActivity() {
             //edittextが空かnullじゃない時
             if (editText.isNullOrEmpty().not()) {
                 //dataにedittextを追加
-               // data.add(editText)
-                data+=editText
+                data += editText
             }
 
             Log.d("debug", data.toString())
 
             val editor = pref.edit()
             var memoList = ""
+            //配列を文字列にしてデータ保存
             if (data != null) {
                 for (word in data) {
 
-                        memoList += "$word,"
+                    memoList += "$word,"
                 }
             }
             Log.d("debug", memoList)

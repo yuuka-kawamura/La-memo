@@ -25,16 +25,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).apply { setContentView(this.root) }
         pref = getSharedPreferences("SharedPref", Context.MODE_PRIVATE)
 
-         /*data = arrayListOf(
-              "a", "i"
-          )*/
-       // if (data.isNullOrEmpty().not())
-       data=pref.getString("Key","")?.split(",") as ArrayList<String>
+        /*data = arrayListOf(
+             "a", "i"
+         )*/
+        //保存内容が空の時を除く
+        if (pref.getString("Key", "")!!.isNotEmpty())
+            data = pref.getString("Key", "")?.split(",") as ArrayList<String>
 
 
         //val addtext = intent.getStringExtra("Text")
 
-     // pref.getString("Key", "")?.split(",")?.forEach {  data }
+        // pref.getString("Key", "")?.split(",")?.forEach {  data }
         Log.d("debug", data.toString())
         val list = findViewById<ListView>(R.id.list_view)
         list.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, data)
