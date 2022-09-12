@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MemoActivity">
 
+<!--   🧸: Buttonの代わりにFloatingActionButtonを使用した実装に挑戦してみよう！ButtonのチェックマークをテキストではなくMaterialIconを使用してみよう -->
     <Button
         android:id="@+id/check_button"
         android:layout_width="90dp"
@@ -20,6 +21,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+<!--      🧸: EditTextの代わりにMaterialTextFieldsを使用してみよう -->
     <EditText
         android:id="@+id/memo_edittext"
         android:layout_width="wrap_content"

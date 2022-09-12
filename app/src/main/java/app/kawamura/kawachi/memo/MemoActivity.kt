@@ -10,8 +10,10 @@ import android.util.Log
 import android.widget.EditText
 import app.kawamura.kawachi.memo.databinding.ActivityMemoBinding
 
+//reviewed by toppo 🧸: メモの保存画面も良い感じだね！配列周りのところだけもうちょっとトライしてみよう
 class MemoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMemoBinding
+    //🧸: 必要ない変数は削除しよう
     private lateinit var pref: SharedPreferences
     private var data = ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +25,11 @@ class MemoActivity : AppCompatActivity() {
             data = pref.getString("Key", "")?.split(",") as ArrayList<String>
 
         binding.checkButton.setOnClickListener {
+            //🧸:ここはvalで良さそう！
             //打った文字をeditTextに代入
             var editText = binding.memoEdittext.text.toString()
             //edittextが空かnullじゃない時
+            //🧸: 配列の作成は完璧！
             if (editText.isNullOrEmpty().not()) {
                 //dataにedittextを追加
                 data += editText
@@ -35,6 +39,7 @@ class MemoActivity : AppCompatActivity() {
 
             val editor = pref.edit()
             var memoList = ""
+            //🧸: 文字列にするところで","を入れているせいで空白の要素が入ってしまっているね>< memoList = data.toString()で良いかも！
             //配列を文字列にしてデータ保存
             if (data != null) {
                 for (word in data) {
