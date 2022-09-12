@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!--    🧸: RecyclerViewを使ったList表示にも挑戦してみよう-->
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
